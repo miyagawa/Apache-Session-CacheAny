@@ -2,7 +2,7 @@ package Apache::Session::CacheAny;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use base qw(Apache::Session);
 
@@ -45,6 +45,9 @@ Apache::Session::CacheAny - use Cache::* for Apache::Session storage
       AutoPurgeOnGet   => 0,
       AutoPurgeOnSet   => 1,
       MaxSize          => 10_000,
+      CacheRoot        => 'cache_root',
+      CacheDepth       => 'cache_depth',
+      DirectoryUmask   => 'directory_umask',
   };
 
 =head1 DESCRIPTION

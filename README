@@ -14,6 +14,9 @@ SYNOPSIS
           AutoPurgeOnGet   => 0,
           AutoPurgeOnSet   => 1,
           MaxSize          => 10_000,
+          CacheRoot        => 'cache_root',
+          CacheDepth       => 'cache_depth',
+          DirectoryUmask   => 'directory_umask',
       };
 
 DESCRIPTION
@@ -28,7 +31,7 @@ ARGUMENTS
     optional arguments.
 
 NOTE
-    Apache::Session::CacheAny uses Apache::Session::Lock::Semaphore as its
+    Apache::Session::CacheAny uses Apache::Session::Lock::Null as its
     locking scheme. You can use Apache::Session::Flex to change that.
 
 AUTHOR

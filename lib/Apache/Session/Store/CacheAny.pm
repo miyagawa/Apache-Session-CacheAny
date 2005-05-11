@@ -2,7 +2,7 @@ package Apache::Session::Store::CacheAny;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 
 sub new {
@@ -46,7 +46,7 @@ sub _cache {
 	# We ignore "Can't locate" exception
 	my $impl = $session->{args}->{CacheImpl};
 	eval qq{require $impl};
-	if ($@ && $@ !~ /Can\'t locate/) {
+	if ($@ && !$impl->can('new')) {
 	    die "Failed to load $impl: $@";
 	}
 
@@ -58,6 +58,9 @@ sub _cache {
 	    AutoPurgeOnSet    => 'auto_purge_on_set',
 	    AutoPurgeOnGet    => 'auto_purge_on_get',
 	    MaxSize           => 'max_size',
+	    CacheRoot         => 'cache_root',
+	    CacheDepth        => 'cache_depth',
+	    DirectoryUmask    => 'directory_umask',
 	);
 
 	my %opt = map {
@@ -113,6 +116,9 @@ specify these options as Apache::Session's tie options like this:
       AutoPurgeOnGet   => 0,
       AutoPurgeOnSet   => 1,
       MaxSize          => 10_000,
+      CacheRoot        => '/tmp',
+      CacheDepth       => 3,
+      DirectoryUmask   => 077,
   };
 
 Note that spelling of options are slightly differernt from those for
@@ -126,6 +132,9 @@ Cache::Cache. Here is a conversion table.
   AutoPurgeOnSet         => auto_purge_on_set
   AutoPurgeOnGet         => auto_purge_on_get
   MaxSize                => max_size
+  CacheRoot              => cache_root
+  CacheDepth             => cache_depth
+  DirectoryUmask         => directory_umask
 
 See L<Cache::Cache> for details.
 
